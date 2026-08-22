@@ -4,9 +4,6 @@ FROM runpod/worker-comfyui:5.4.1-base-cuda12.8.1
 # Custom nodes
 # --------------------------------------------------
 
-RUN git clone https://github.com/Acly/comfyui-tooling-nodes.git \
-/comfyui/custom_nodes/comfyui-tooling-nodes
-
 RUN git clone https://github.com/cubiq/ComfyUI_InstantID.git \
 /comfyui/custom_nodes/ComfyUI_InstantID
 
@@ -78,7 +75,7 @@ PY
 # --------------------------------------------------
 # Startup script
 # --------------------------------------------------
-
+COPY image.png /comfyui/input/wilma.png
 COPY start-custom.sh /start-custom.sh
 RUN chmod +x /start-custom.sh
 
