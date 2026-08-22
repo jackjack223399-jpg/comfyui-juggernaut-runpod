@@ -1,22 +1,37 @@
 #!/bin/bash
 set -e
 
-CACHE_ROOT="/runpod-volume/huggingface-cache/hub/models--RunDiffusion--Juggernaut-XL-v9"
+CACHE_ROOT="/runpod-volume/huggingface-cache/hub/models--shootstuff--LUSTIFY-v2.0"
+
+echo "Looking for LUSTIFY in: $CACHE_ROOT"
 
 SNAPSHOT=$(find "$CACHE_ROOT/snapshots" -mindepth 1 -maxdepth 1 -type d | head -n 1)
 
-MODEL=$(find "$SNAPSHOT" -type f -name "Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors" | head -n 1)
-
-if [ -z "$MODEL" ]; then
-echo "JuggernautXL checkpoint not found in RunPod model cache"
+if [ -z "$SNAPSHOT" ]; then
+echo "ERROR: Hugging Face snapshot not found"
 exit 1
 fi
+
+echo "Snapshot found: $SNAPSHOT"
+
+MODEL=$(find "$SNAPSHOT" \
+-name "lustifySDXLNSFWSFW_v20.safetensors" \
+-print -quit)
+
+if [ -z "$MODEL" ]; then
+echo "ERROR: LUSTIFY checkpoint not found"
+echo "Files available in snapshot:"
+find "$SNAPSHOT" -maxdepth 2 -print
+exit 1
+fi
+
+echo "LUSTIFY found: $MODEL"
 
 mkdir -p /comfyui/models/checkpoints
 
 ln -sf "$MODEL" \
-/comfyui/models/checkpoints/Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors
+/comfyui/models/checkpoints/lustifySDXLNSFWSFW_v20.safetensors
 
-echo "Using cached model: $MODEL"
+echo "Checkpoint linked successfully"
 
 exec /start.sh
