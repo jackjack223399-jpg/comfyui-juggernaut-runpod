@@ -1,9 +1,5 @@
 FROM runpod/worker-comfyui:5.4.1-base-cuda12.8.1
 
-# --------------------------------------------------
-# Custom nodes
-# --------------------------------------------------
-
 RUN git clone https://github.com/cubiq/ComfyUI_InstantID.git \
 /comfyui/custom_nodes/ComfyUI_InstantID
 
