@@ -13,9 +13,6 @@ RUN git clone https://github.com/cubiq/ComfyUI_InstantID.git \
 # --------------------------------------------------
 
 RUN pip install --no-cache-dir \
--r /comfyui/custom_nodes/comfyui-tooling-nodes/requirements.txt
-
-RUN pip install --no-cache-dir \
 -r /comfyui/custom_nodes/ComfyUI_InstantID/requirements.txt \
 insightface \
 onnxruntime \
