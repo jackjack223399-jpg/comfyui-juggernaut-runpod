@@ -8,3 +8,4 @@ COPY start-custom.sh /comfyui/start-custom.sh
 RUN chmod +x /comfyui/start-custom.sh
 
 COPY wilma.png /comfyui/input/wilma.png
+# REBUILD
