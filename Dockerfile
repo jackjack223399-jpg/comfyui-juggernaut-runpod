@@ -1,11 +1,15 @@
-FROM runpod/worker-comfyui:5.4.1-base
+FROM runpod/worker-comfyui:5.8.6-base
 
 USER root
 
-RUN pip install --no-cache-dir huggingface_hub
+RUN git clone https://github.com/lrzjason/Comfyui-QwenEditUtils.git \
+/comfyui/custom_nodes/Comfyui-QwenEditUtils
 
-COPY start-custom.sh /comfyui/start-custom.sh
-RUN chmod +x /comfyui/start-custom.sh
+RUN uv pip install -r /comfyui/requirements.txt \
+&& if [ -f /comfyui/custom_nodes/Comfyui-QwenEditUtils/requirements.txt ]; then \
+uv pip install -r /comfyui/custom_nodes/Comfyui-QwenEditUtils/requirements.txt; \
+fi
+
+RUN mkdir -p /comfyui/input /comfyui/models/checkpoints
 
 COPY wilma.png /comfyui/input/wilma.png
-# REBUILD
