@@ -15,4 +15,19 @@ RUN mkdir -p \
 /comfyui/input \
 /comfyui/models/checkpoints
 
+RUN python - <<'PY'
+from huggingface_hub import hf_hub_download
+
+hf_hub_download(
+repo_id="Phr00t/Qwen-Image-Edit-Rapid-AIO",
+filename="v19/Qwen-Rapid-AIO-NSFW-v19.safetensors",
+local_dir="/tmp/qwen"
+)
+PY
+
+RUN mv \
+/tmp/qwen/v19/Qwen-Rapid-AIO-NSFW-v19.safetensors \
+/comfyui/models/checkpoints/Qwen-Rapid-AIO-NSFW-v19.safetensors \
+&& rm -rf /tmp/qwen
+
 COPY wilma.png /comfyui/input/wilma.png
