@@ -31,3 +31,4 @@ RUN mv \
 && rm -rf /tmp/qwen
 
 COPY wilma.png /comfyui/input/wilma.png
+# rebuid
